@@ -70,8 +70,8 @@ export const getSurah = async (req, res) => {
 
 export const getAyah = async (req, res) => {
 
-  const ayah = req.query.no
-  const surah = req.query.surah
+  const ayah = req.query.no || 1
+  const surah = req.query.surah || 2
 
   return await quran_surah.find({ number: surah }).then(surah => {
     quran_ayah.find({ ayah, surah: req.query.surah }).then(ayah => {
@@ -134,8 +134,13 @@ export const postAyah = async (req, res) => {
         rewayah: req.body.rewayah
       })
 
-      quran_ayah.find({ number: ayah_data.number.inQuran }).then(result => {
-        if (ayah_data.number.inQuran != result.number) {
+      return quran_ayah.find({ number: ayah_data.number.inQuran }).then(result => {
+        if (result[0]) {
+          return res.status(400).json({
+            code: 400,
+            message: 'Data is Exist!',
+          })
+        } else if (!result[0]) {
           return ayah_one.save().then(results => {
             res.status(201).json({
               code: 201,
@@ -148,12 +153,6 @@ export const postAyah = async (req, res) => {
               message: err
             })
           })
-        } else {
-          return res.status(400).json({
-            code: 400,
-            message: 'Data is Exist!',
-          })
-
         }
       })
     })

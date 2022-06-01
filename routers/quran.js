@@ -8,6 +8,6 @@ quranRouters.get('/juz/:no', getJuz)
 quranRouters.get('/surah', getAllSurah)
 quranRouters.get('/surah/:no', getSurah)
 
-quranRouters.get('/ayah', getAyah)
-quranRouters.post('/ayah', postAyah)
+quranRouters.get('/ayah/?', getAyah)
+quranRouters.post('/ayah/?', postAyah)
 quranRouters.delete('/ayah/:id', deleteAyah)
