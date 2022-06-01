@@ -5,8 +5,24 @@ const quran_ayah = new mongoose.Schema({
     type: Object,
     required: true
   },
-  place_in: {
-    type: Object,
+  number: {
+    type: Number,
+    required: true
+  },
+  ayah: {
+    type: Number,
+    required: true
+  },
+  surah: {
+    type: Number,
+    required: true
+  },
+  juz: {
+    type: Number,
+    required: true
+  },
+  page: {
+    type: Number,
     required: true
   },
   audio: {
