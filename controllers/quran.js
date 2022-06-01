@@ -4,27 +4,33 @@ import quran_surah from "../models/surah.js"
 
 export const getJuz = async (req, res) => {
   return await quran_ayah.find({ juz: req.params.no }).sort('number').then(ayah => {
+    if (ayah[0]) {
+      let sort = 'th'
 
-    let sort = 'th'
-
-    switch (ayah[0].juz) {
-      case 1:
-        sort = 'st'
-        break
-      case 2:
-        sort = 'nd'
-        break
-      default:
-        break
-    }
-
-    res.status(200).json({
-      code: 200,
-      message: `Getting For ${ayah[0].juz}${sort} Juz of Quran Successfully`,
-      data: {
-        ayah: ayah
+      switch (ayah[0].juz) {
+        case 1:
+          sort = 'st'
+          break
+        case 2:
+          sort = 'nd'
+          break
+        default:
+          break
       }
-    })
+
+      res.status(200).json({
+        code: 200,
+        message: `Getting For ${ayah[0].juz}${sort} Juz of Quran Successfully`,
+        data: {
+          ayah: ayah
+        }
+      })
+    } else if (!ayah[0]) {
+      res.status(404).json({
+        code: 404,
+        message: 'Juz not Found!'
+      })
+    }
   }).catch(err => {
     res.status(402).json({
       code: 402,
@@ -50,16 +56,23 @@ export const getAllSurah = async (req, res) => {
 
 export const getSurah = async (req, res) => {
   return await quran_surah.find({ number: req.params.no }).then(surah => {
-    quran_ayah.find({ surah: req.params.no }).sort('ayah').then(ayah => {
-      res.status(200).json({
-        code: 200,
-        message: `Getting For ${surah[0].name.en} Surah Successfully`,
-        data: {
-          surah: surah[0],
-          ayah: ayah[0]
-        }
+    if (surah[0]) {
+      quran_ayah.find({ surah: req.params.no }).sort('ayah').then(ayah => {
+        res.status(200).json({
+          code: 200,
+          message: `Getting For ${surah[0].name.en} Surah Successfully`,
+          data: {
+            surah: surah[0],
+            ayah: ayah[0]
+          }
+        })
       })
-    })
+    } else if (!surah[0]) {
+      res.status(404).json({
+        code: 404,
+        message: 'Surah not Found!'
+      })
+    }
   }).catch(err => {
     res.status(402).json({
       code: 402,
@@ -70,35 +83,41 @@ export const getSurah = async (req, res) => {
 
 export const getAyah = async (req, res) => {
 
-  const ayah = req.query.no || 1
+  const ayah = req.params.no || 1
   const surah = req.query.surah || 2
 
   return await quran_surah.find({ number: surah }).then(surah => {
     quran_ayah.find({ ayah, surah: req.query.surah }).then(ayah => {
+      if (ayah[0]) {
+        let sort = 'th'
 
-      let sort = 'th'
-
-      switch (ayah[0].ayah) {
-        case 1:
-          sort = 'st'
-          break
-        case 2:
-          sort = 'nd'
-          break
-        default:
-          break
-      }
-
-      res.status(200).json({
-        code: 200,
-        message: `Getting For ${ayah[0].ayah}${sort} Ayah of ${surah[0].name.en} Surah Successfully`,
-        data: {
-          number: surah[0].number,
-          name: surah[0].name,
-          translation: surah[0].translation,
-          ayah: ayah[0]
+        switch (ayah[0].ayah) {
+          case 1:
+            sort = 'st'
+            break
+          case 2:
+            sort = 'nd'
+            break
+          default:
+            break
         }
-      })
+
+        res.status(200).json({
+          code: 200,
+          message: `Getting For ${ayah[0].ayah}${sort} Ayah of ${surah[0].name.en} Surah Successfully`,
+          data: {
+            number: surah[0].number,
+            name: surah[0].name,
+            translation: surah[0].translation,
+            ayah: ayah[0]
+          }
+        })
+      } else if (!ayah[0]) {
+        res.status(404).json({
+          code: 404,
+          message: 'Ayah not Found!'
+        })
+      }
     })
   }).catch(err => {
     res.status(402).json({
@@ -106,16 +125,17 @@ export const getAyah = async (req, res) => {
       message: err
     })
   })
+
 }
 
 export const postAyah = async (req, res) => {
 
-  const ayah = req.query.no
+  const ayah = req.params.no
   const surah = req.query.surah
 
   await fetch(`https://api.quran.sutanlab.id/surah/${surah}/${ayah}`)
     .then(r => r.json())
-    .then(j => {
+    .then(async (j) => {
 
       const ayah_data = j.data
 
