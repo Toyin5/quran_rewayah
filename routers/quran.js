@@ -1,9 +1,11 @@
 import express from "express"
-import { deleteAllAyah, deleteAyah, getAyah, postAyah } from "../controllers/quran.js"
+import { deleteAyah, getAllSurah, getAyah, getSurah, postAyah } from "../controllers/quran.js"
 
 export const quranRouters = express.Router()
+
+quranRouters.get('/surah', getAllSurah)
+quranRouters.get('/surah/:no', getSurah)
 
 quranRouters.get('/ayah', getAyah)
 quranRouters.post('/ayah', postAyah)
 quranRouters.delete('/ayah/:id', deleteAyah)
-quranRouters.delete('/ayah_all/:v', deleteAllAyah) 
