@@ -91,7 +91,7 @@ export const getAyah = async (req, res) => {
 
       res.status(200).json({
         code: 200,
-        message: `Getting For ${ayah[0].ayah}${sort} of ${surah[0].name.en} Surah Successfully`,
+        message: `Getting For ${ayah[0].ayah}${sort} Ayah of ${surah[0].name.en} Surah Successfully`,
         data: {
           number: surah[0].number,
           name: surah[0].name,
@@ -134,17 +134,27 @@ export const postAyah = async (req, res) => {
         rewayah: req.body.rewayah
       })
 
-      return ayah_one.save().then(results => {
-        res.status(201).json({
-          code: 201,
-          message: 'Data Creating Success!',
-          data: results
-        })
-      }).catch(err => {
-        res.status(402).json({
-          code: 402,
-          message: err
-        })
+      quran_ayah.find({ number: ayah_data.number.inQuran }).then(result => {
+        if (ayah_data.number.inQuran != result.number) {
+          return ayah_one.save().then(results => {
+            res.status(201).json({
+              code: 201,
+              message: 'Data Creating Success!',
+              data: results
+            })
+          }).catch(err => {
+            res.status(402).json({
+              code: 402,
+              message: err
+            })
+          })
+        } else {
+          return res.status(400).json({
+            code: 400,
+            message: 'Data is Exist!',
+          })
+
+        }
       })
     })
 }
