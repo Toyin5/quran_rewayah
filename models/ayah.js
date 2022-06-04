@@ -17,6 +17,10 @@ const quran_ayah = new mongoose.Schema({
     type: Number,
     required: true
   },
+  name: {
+    type: String,
+    required: true
+  },
   juz: {
     type: Number,
     required: true
