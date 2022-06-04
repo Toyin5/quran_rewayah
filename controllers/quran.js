@@ -250,29 +250,29 @@ export const deleteAyah = async (req, res) => {
 
   return await quran_ayah.find({ ayah, surah })
     .then(results => {
-
-      let sort = 'th'
-
-      switch (results[0].ayah) {
-        case 1:
-          sort = 'st'
-          break
-        case 2:
-          sort = 'nd'
-          break
-        default:
-          break
-      }
-
       if (results[0]) {
         return quran_ayah.deleteMany({ number: results[0].number }).then(ress => {
+
+          let sort = 'th'
+
+          switch (results[0].ayah) {
+            case 1:
+              sort = 'st'
+              break
+            case 2:
+              sort = 'nd'
+              break
+            default:
+              break
+          }
+
           res.status(200).json({
             code: 200,
             message: `Deleting for ${results[0].ayah}${sort} of ${results[0].name} Successfully!`,
             data: ress
           })
         })
-      } else {
+      } else if (!results[0]) {
         return res.status(404).json({
           code: 404,
           message: 'Ayah Not Found!',
