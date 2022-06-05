@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 app.use('/', (req, res) => {
   res.render('404', {
     title: '404',
-    layout: './404',
+    layout: './layout/layout',
     data: '404 Page'
   })
 })
