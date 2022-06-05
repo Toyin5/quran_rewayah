@@ -16,7 +16,7 @@ app.use(bodyParser.json())
 app.use('/public', express.static('public'))
 app.set('view engine', 'ejs')
 
-app.use((req, res, next) => {
+app.use('/', (req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
     "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
