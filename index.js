@@ -4,9 +4,10 @@ import bodyParser from "body-parser"
 import expressLayouts from "express-ejs-layouts"
 import { quranRouters } from "./routers/quran.js"
 import database from "./utils/db.js"
+import 'dotenv/config'
 
 const app = express()
-const port = 3300
+const port = 3300 || process.env.PORT
 
 database()
 app.use(cors())
@@ -25,11 +26,11 @@ app.get('/', (req, res) => {
   })
 })
 
-app.use('/', (req, res) => {
+app.use('/:any', (req, res) => {
   res.render('404', {
     title: '404',
     layout: './layout/layout',
-    data: '404 Page'
+    data: req.params.any + ' Page Not Found'
   })
 })
 

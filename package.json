@@ -1,17 +1,14 @@
 {
   "name": "quran_api_rewayah",
   "version": "1.0.0",
-  "description": "Rewayah of Quran API",
+  "description": "Rewayah of Quran",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js"
   },
-  "author": {
-    "Founder": "Arief Saifuddien",
-    "Co FOunder": "Muhammad Toyin"
-  },
+  "author": "Arief Saifuddien & Muhammad Toyin",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.16"
@@ -19,6 +16,7 @@
   "dependencies": {
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-ejs-layouts": "^2.5.1",

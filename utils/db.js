@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
+import 'dotenv/config'
 
-const database = () => {
-  return mongoose.connect('mongodb+srv://quran:quran@cluster0.me6ic.mongodb.net/quran-rewayah?retryWrites=true&w=majority')
+const database = async () => {
+  return await mongoose.connect(process.env.MONGODB)
     .then((res) => console.log('connection success : ', res.options.autoIndex))
     .catch(err => console.log('connection failed : ', err))
 }
