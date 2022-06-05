@@ -1,12 +1,11 @@
 import express from "express"
 import cors from "cors"
 import bodyParser from "body-parser"
-import 'dotenv/config'
 import { quranRouters } from "./routers/quran.js"
 import database from "./utils/db.js"
 
 const app = express()
-const port = process.env.PORT || 3300
+const port = 3300
 
 database()
 app.use(cors())
