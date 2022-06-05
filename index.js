@@ -19,28 +19,28 @@ app.set('view engine', 'ejs')
 app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
-    "default-src 'self';"
+    "default-src 'self'"
   );
   next();
 });
 
 app.use('/api-quran-rewayah', quranRouters)
 
-app.get('/', (req, res) => {
-  res.render('home', {
-    title: 'Home',
-    layout: './layout/layout',
-    data: 'Home Page'
-  })
-})
+// app.get('/', (req, res) => {
+//   res.render('home', {
+//     title: 'Home',
+//     layout: './layout/layout',
+//     data: 'Home Page'
+//   })
+// })
 
-app.use('/:any', (req, res) => {
-  res.render('404', {
-    title: '404',
-    layout: './layout/layout',
-    data: req.params.any.toUpperCase() + ' Page Not Found'
-  })
-})
+// app.use('/:any', (req, res) => {
+//   res.render('404', {
+//     title: '404',
+//     layout: './layout/layout',
+//     data: req.params.any.toUpperCase() + ' Page Not Found'
+//   })
+// })
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`)
