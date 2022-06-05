@@ -8,7 +8,10 @@
     "dev": "nodemon",
     "start": "node index.js"
   },
-  "author": "Arief Saifuddien & Muhammad Toyin",
+  "author": {
+    "Founder": "Arief Saifuddien",
+    "Co Founder": "Muhammad Toyin"
+  },
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.16"
