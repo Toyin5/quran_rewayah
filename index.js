@@ -5,7 +5,6 @@ import expressLayouts from "express-ejs-layouts"
 import { quranRouters } from "./routers/quran.js"
 import database from "./utils/db.js"
 import 'dotenv/config'
-import 'ejs'
 
 const app = express()
 const port = process.env.PORT || 3300
