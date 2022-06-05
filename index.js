@@ -11,7 +11,7 @@ database()
 app.use(cors())
 app.use(bodyParser.json())
 
-app.use('/api/quran_rewayah', quranRouters)
+app.use('/api/quran-rewayah', quranRouters)
 
 app.use('/', (req, res) => {
   res.status(200).json({
