@@ -7,7 +7,7 @@ import database from "./utils/db.js"
 import 'dotenv/config'
 
 const app = express()
-const port = 3300 || process.env.PORT
+const port = process.env.PORT || 3300
 
 database()
 app.use(cors())
