@@ -13,9 +13,18 @@ database()
 app.use(cors())
 app.use(expressLayouts)
 app.use(bodyParser.json())
+app.use('/public', express.static('public'))
 app.set('view engine', 'ejs')
 
 app.use('/api-quran-rewayah', quranRouters)
+
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
+  );
+  next();
+});
 
 app.get('/', (req, res) => {
   res.render('home', {
