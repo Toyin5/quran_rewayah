@@ -1,24 +1,22 @@
-import express from "express"
-import cors from "cors"
-import bodyParser from "body-parser"
-import { quranRouters } from "./routers/quran.js"
-import database from "./utils/db.js"
-import path from 'path'
 import 'dotenv/config'
+import cors from "cors"
+import express from "express"
+import database from "./utils/db.js"
+import { quranRouters } from "./routers/quran.js"
 
 const app = express()
 const port = process.env.PORT || 3300
 
 database()
 app.use(cors())
-app.use(bodyParser.json())
+app.use(express.json())
 
 app.use('/api/quran-rewayah', quranRouters)
 
-app.use('/:any', (req, res) => {
+app.use('/', (req, res) => {
   res.status(404).json({
     code: 404,
-    message: req.params.any.toUpperCase() + ' Page Not Found',
+    message: 'Page Not Found',
     github: 'https://github.com/saifuddien/quran_rewayah',
     docs: [
       {
@@ -53,6 +51,4 @@ app.use('/:any', (req, res) => {
   })
 })
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`)
-})
+app.listen(port, () => console.log(`Server running on http://localhost:${port}`))
