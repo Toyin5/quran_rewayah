@@ -12,11 +12,6 @@ const port = process.env.PORT || 3300
 database()
 app.use(cors())
 app.use(bodyParser.json())
-app.use(express.static(path.join('public')))
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join('./index.html'))
-})
 
 app.use('/api/quran-rewayah', quranRouters)
 
