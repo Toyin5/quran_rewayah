@@ -14,6 +14,10 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static(path.join('public')))
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join('index.html'))
+})
+
 app.use('/api/quran-rewayah', quranRouters)
 
 app.use('/:any', (req, res) => {
