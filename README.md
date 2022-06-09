@@ -4,7 +4,7 @@ This is an API that provides the noble quran with its variations. The API is act
 
 This is the hosted site: (quran-rewayah.vercel.app) 
 
-This project is developed and maintained by [Toyin](https://github.com/Toyin5) and [Arif] (https://github.com/saifuddien)
+This project is developed and maintained by [Toyin](https://github.com/Toyin5) and [Arif](https://github.com/saifuddien)
 
 
 Don't forget to give a star
