@@ -10,6 +10,13 @@ const port = process.env.PORT || 3300
 database()
 app.use(cors())
 app.use(express.json())
+app.set('view engine', 'ejs')
+
+app.get('/home', (req, res) => {
+  res.render('home', {
+    title: 'Home'
+  })
+})
 
 app.use('/api/quran-rewayah', quranRouters)
 
