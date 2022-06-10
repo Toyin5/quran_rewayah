@@ -1,8 +1,6 @@
 import 'dotenv/config'
 import cors from "cors"
 import express from "express"
-import helmet from 'helmet'
-import expressEjsLayouts from 'express-ejs-layouts'
 import database from "./utils/db.js"
 import { quranRouters } from "./routers/quran.js"
 
@@ -10,34 +8,8 @@ const app = express()
 const port = process.env.PORT || 3300
 
 database()
-app.use(helmet())
-app.use(helmet.contentSecurityPolicy());
-app.use(helmet.crossOriginEmbedderPolicy());
-app.use(helmet.crossOriginOpenerPolicy());
-app.use(helmet.crossOriginResourcePolicy());
-app.use(helmet.dnsPrefetchControl());
-app.use(helmet.expectCt());
-app.use(helmet.frameguard());
-app.use(helmet.hidePoweredBy());
-app.use(helmet.hsts());
-app.use(helmet.ieNoOpen());
-app.use(helmet.noSniff());
-app.use(helmet.originAgentCluster());
-app.use(helmet.permittedCrossDomainPolicies());
-app.use(helmet.referrerPolicy());
-app.use(helmet.xssFilter());
-app.use(expressEjsLayouts)
 app.use(cors())
 app.use(express.json())
-
-app.set('view engine', 'ejs')
-
-app.get('/home', (req, res) => {
-  res.render('home', {
-    title: 'Home',
-    layout: 'layout/layout'
-  })
-})
 
 app.use('/api/quran-rewayah', quranRouters)
 
