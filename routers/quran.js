@@ -9,16 +9,17 @@ import {
   postAyah,
   updateAyah
 } from "../controllers/quran.js"
+import { verifyToken } from "../controllers/token.js"
 
 export const quranRouters = express.Router()
 
-quranRouters.get('/juz/:no', getJuz)
+quranRouters.get('/juz/:no', verifyToken, getJuz)
 
-quranRouters.get('/surah', getAllSurah)
-quranRouters.get('/surah/:no', getSurah)
+quranRouters.get('/surah', verifyToken, getAllSurah)
+quranRouters.get('/surah/:no', verifyToken, getSurah)
 
-quranRouters.get('/ayah/:no/?', getAyah)
-quranRouters.post('/ayah/:no/?', postAyah)
-quranRouters.put('/ayah/:no/?', updateAyah)
-quranRouters.delete('/ayah/:no/?', deleteAyah)
-quranRouters.delete('/all_ayah/:v', deleteEverything)
+quranRouters.get('/ayah/:no/?', verifyToken, getAyah)
+quranRouters.post('/ayah/:no/?', verifyToken, postAyah)
+quranRouters.put('/ayah/:no/?', verifyToken, updateAyah)
+quranRouters.delete('/ayah/:no/?', verifyToken, deleteAyah)
+quranRouters.delete('/all_ayah/:v', verifyToken, deleteEverything)
