@@ -57,7 +57,7 @@ export const getAdmin = async (req, res) => {
       return await admin.findOne({ email: adminLog.email }).then(result => {
 
         res.status(200).header('auth-token', token).json({
-          status: 'Login Success!',
+          message: 'Login Success!',
           code: 200,
           data: result,
           token
