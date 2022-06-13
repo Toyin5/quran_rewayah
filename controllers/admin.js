@@ -1,6 +1,7 @@
 import admin from "../models/admin.js";
 import bcrypt from 'bcrypt'
 import jsonwebtoken from "jsonwebtoken";
+import 'dotenv/config'
 
 export const addAdmin = async (req, res) => {
   const { adminname, email } = req.body
