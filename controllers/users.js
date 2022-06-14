@@ -1,30 +1,30 @@
-import admin from "../models/admin.js";
+import users from "../models/users.js";
 import bcrypt from 'bcrypt'
 import jsonwebtoken from "jsonwebtoken";
 import 'dotenv/config'
 
-export const addAdmin = async (req, res) => {
-  const { adminname, email } = req.body
+export const addUsers = async (req, res) => {
+  const { username, email } = req.body
   const pass = req.body.password
 
   const salt = await bcrypt.genSalt(10)
   const password = await bcrypt.hash(pass, salt)
 
-  const add = new admin({
-    adminname, email, password
+  const add = new users({
+    username, email, password
   })
 
-  return await admin.find({ email }).then(result => {
+  return await users.find({ email }).then(result => {
     if (result[0]) {
       return res.status(400).json({
         code: 400,
-        message: 'Admin is Exist!',
+        message: 'Users is Exist!',
       })
 
-      // return admin.findByIdAndDelete({ _id: result[0]._id }).then(ok => {
+      // return users.findByIdAndDelete({ _id: result[0]._id }).then(ok => {
       //   res.status(400).json({
       //     code: 400,
-      //     message: 'Admin is Deleted!',
+      //     message: 'Users is Deleted!',
       //   })
       // })
 
@@ -32,7 +32,7 @@ export const addAdmin = async (req, res) => {
       return add.save().then(results => {
         res.status(201).json({
           code: 201,
-          message: 'Admin Creating Success!',
+          message: 'Users Creating Success!',
           data: results
         })
       }).catch(err => {
@@ -45,50 +45,50 @@ export const addAdmin = async (req, res) => {
   })
 }
 
-export const getAdmin = async (req, res) => {
+export const getUsers = async (req, res) => {
   const { email, password } = req.body
 
-  const adminLog = await admin.findOne({ email })
-  if (adminLog && password) {
-    const login = await bcrypt.compare(password, adminLog.password)
-    const token = jsonwebtoken.sign({ _id: adminLog._id }, process.env.SECRET_KEY)
+  const usersLog = await users.findOne({ email })
+  if (usersLog && password) {
+    const login = await bcrypt.compare(password, usersLog.password)
+    const token = jsonwebtoken.sign({ _id: usersLog._id }, process.env.SECRET_KEY)
 
     if (login) {
-      return await admin.findOne({ email: adminLog.email }).then(result => {
+      return await users.findOne({ email: usersLog.email }).then(result => {
 
         res.status(200).header('auth-token', token).json({
-          message: 'Admin Login Success!',
+          message: 'User Login Success!',
           code: 200,
           data: result,
           token
         })
       }).catch(err => res.json({
-        message: 'Admin Login Failed',
+        message: 'User Login Failed',
         error: err.message
       }))
     } else {
       return res.status(400).json({
-        status: 'Login Failed!',
+        status: 'User Login Failed!',
         code: 400,
         message: 'Email/Password not found'
       })
     }
   } else {
     return res.status(400).json({
-      status: 'Login Failed!',
+      status: 'User Login Failed!',
       code: 400,
       message: 'Email/Password not found'
     })
   }
 }
 
-export const Admin = async (req, res) => {
+export const Users = async (req, res) => {
 
-  return await admin.findOne({ _id: req.params.id }).then(result => {
+  return await users.findOne({ _id: req.params.id }).then(result => {
     const token = jsonwebtoken.sign({ _id: result._id }, process.env.SECRET_KEY)
 
     res.status(200).header('auth-token', token).json({
-      message: 'Login Success!',
+      message: 'User Login Success!',
       code: 200,
       data: result,
       token

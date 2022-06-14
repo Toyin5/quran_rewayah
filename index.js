@@ -4,6 +4,7 @@ import express from "express"
 import database from "./utils/db.js"
 import { quranRouters } from "./routers/quran.js"
 import { adminRouters } from './routers/admin.js'
+import { usersRouters } from './routers/users.js'
 
 const app = express()
 const port = process.env.PORT || 3300
@@ -14,6 +15,7 @@ app.use(express.json())
 
 app.use('/api/quran-rewayah', quranRouters)
 app.use('/api/admin', adminRouters)
+app.use('/api/users', usersRouters)
 
 app.use('/', (req, res) => {
   res.status(404).json({
