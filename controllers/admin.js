@@ -81,3 +81,40 @@ export const getAdmin = async (req, res) => {
     })
   }
 }
+
+export const Admin = async (req, res) => {
+  const _id = req.body.id
+
+  const adminLog = await admin.findOne({ _id })
+  if (adminLog && password) {
+    const login = await bcrypt.compare(password, adminLog.password)
+    const token = jsonwebtoken.sign({ _id: adminLog._id }, process.env.SECRET_KEY)
+
+    if (login) {
+      return await admin.findOne({ email: adminLog.email }).then(result => {
+
+        res.status(200).header('auth-token', token).json({
+          message: 'Login Success!',
+          code: 200,
+          data: result,
+          token
+        })
+      }).catch(err => res.json({
+        message: 'Login Failed',
+        error: err.message
+      }))
+    } else {
+      return res.status(400).json({
+        status: 'Login Failed!',
+        code: 400,
+        message: 'Email/Password not found'
+      })
+    }
+  } else {
+    return res.status(400).json({
+      status: 'Login Failed!',
+      code: 400,
+      message: 'Email/Password not found'
+    })
+  }
+}
