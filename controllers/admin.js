@@ -21,13 +21,6 @@ export const addAdmin = async (req, res) => {
         message: 'Admin is Exist!',
       })
 
-      // return admin.findByIdAndDelete({ _id: result[0]._id }).then(ok => {
-      //   res.status(400).json({
-      //     code: 400,
-      //     message: 'Admin is Deleted!',
-      //   })
-      // })
-
     } else if (!result[0]) {
       return add.save().then(results => {
         res.status(201).json({

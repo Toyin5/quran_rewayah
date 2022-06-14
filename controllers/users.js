@@ -1,6 +1,7 @@
 import users from "../models/users.js";
 import bcrypt from 'bcrypt'
 import jsonwebtoken from "jsonwebtoken";
+import nodemailer from 'nodemailer'
 import 'dotenv/config'
 
 export const addUsers = async (req, res) => {
@@ -18,21 +19,14 @@ export const addUsers = async (req, res) => {
     if (result[0]) {
       return res.status(400).json({
         code: 400,
-        message: 'Users is Exist!',
+        message: 'User is Exist!',
       })
-
-      // return users.findByIdAndDelete({ _id: result[0]._id }).then(ok => {
-      //   res.status(400).json({
-      //     code: 400,
-      //     message: 'Users is Deleted!',
-      //   })
-      // })
 
     } else if (!result[0]) {
       return add.save().then(results => {
         res.status(201).json({
           code: 201,
-          message: 'Users Creating Success!',
+          message: 'User Creating Success!',
           data: results
         })
       }).catch(err => {
@@ -97,4 +91,41 @@ export const Users = async (req, res) => {
     message: 'Login Failed',
     error: err.message
   }))
+}
+
+
+export const Mailer = (req, res) => {
+
+  const { email, subject, text } = req.body
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+
+  const mailOptions = {
+    from: email,
+    to: "quranrewayah@gmail.com, ariefsaifuddien01@gmail.com, toyinmuhammed50@gmail.com",
+    subject,
+    text,
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      return res.status(400).json({
+        message: 'Send Mail Failed!',
+        code: 400,
+        data: err.response
+      })
+    } else {
+      return res.status(200).json({
+        message: 'Send Mail Success!',
+        code: 200,
+        data: info.envelope
+      })
+    }
+  });
 }
