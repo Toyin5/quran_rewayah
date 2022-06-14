@@ -83,9 +83,8 @@ export const getAdmin = async (req, res) => {
 }
 
 export const Admin = async (req, res) => {
-  const _id = req.body.id
 
-  return await admin.findOne({ _id }).then(result => {
+  return await admin.findOne({ _id: req.params.id }).then(result => {
     const token = jsonwebtoken.sign({ _id: result._id }, process.env.SECRET_KEY)
 
     res.status(200).header('auth-token', token).json({

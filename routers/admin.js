@@ -5,4 +5,4 @@ export const adminRouters = express.Router()
 
 adminRouters.post('/signup', addAdmin)
 adminRouters.post('/login', getAdmin)
-adminRouters.get('/login', Admin)
+adminRouters.get('/:id', Admin)
