@@ -132,3 +132,16 @@ export const Mailer = async (req, res) => {
     });
   })
 }
+
+export const checkUsers = async (req, res) => {
+  return await users.find().then(result => {
+    res.status(200).json({
+      message: 'Checking Success!',
+      code: 200,
+      data: result,
+    })
+  }).catch(err => res.json({
+    message: 'Checking Failed',
+    error: err.message
+  }))
+}

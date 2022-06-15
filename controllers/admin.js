@@ -56,21 +56,21 @@ export const getAdmin = async (req, res) => {
           token
         })
       }).catch(err => res.json({
-        message: 'Admin Login Failed',
+        message: 'Admin Login Failed, You are not admin!',
         error: err.message
       }))
     } else {
       return res.status(400).json({
         status: 'Login Failed!',
         code: 400,
-        message: 'Email/Password not found'
+        message: 'Email/Password not found, You are not admin!'
       })
     }
   } else {
     return res.status(400).json({
       status: 'Login Failed!',
       code: 400,
-      message: 'Email/Password not found'
+      message: 'Email/Password not found, You are not admin!'
     })
   }
 }
@@ -88,6 +88,19 @@ export const Admin = async (req, res) => {
     })
   }).catch(err => res.json({
     message: 'Login Failed',
+    error: err.message
+  }))
+}
+
+export const checkAdmin = async (req, res) => {
+  return await admin.find().then(result => {
+    res.status(200).json({
+      message: 'Checking Success!',
+      code: 200,
+      data: result,
+    })
+  }).catch(err => res.json({
+    message: 'Checking Failed',
     error: err.message
   }))
 }
