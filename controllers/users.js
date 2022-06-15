@@ -94,12 +94,13 @@ export const Users = async (req, res) => {
 }
 
 
-export const Mailer = (req, res) => {
+export const Mailer = async (req, res) => {
 
   const { email, subject, text } = req.body
 
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: 'Gmail',
+    host: 'smtp.gmail.com',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
@@ -113,19 +114,21 @@ export const Mailer = (req, res) => {
     text,
   };
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      return res.status(400).json({
-        message: 'Send Mail Failed!',
-        code: 400,
-        data: err.response
-      })
-    } else {
-      return res.status(200).json({
-        message: 'Send Mail Success!',
-        code: 200,
-        data: info.envelope
-      })
-    }
-  });
+  await new Promise((resolve, reject) => {
+    return transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        return res.status(400).json({
+          message: 'Send Mail Failed!',
+          code: 400,
+          data: reject(err)
+        })
+      } else {
+        return res.status(200).json({
+          message: 'Send Mail Success!',
+          code: 200,
+          data: resolve(info.envelope)
+        })
+      }
+    });
+  })
 }
