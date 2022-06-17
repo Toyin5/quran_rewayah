@@ -13,7 +13,7 @@ export const verifyToken = (req, res, next) => {
   }
 
   try {
-    console.log(jsonwebtoken.verify(token, process.env.SECRET_KEY))
+    jsonwebtoken.verify(token, process.env.SECRET_KEY)
     next()
   } catch (error) {
     return res.status(400).json({
