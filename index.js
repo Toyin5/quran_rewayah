@@ -25,7 +25,7 @@ app.use('/api/admin', adminRouters)
 app.use('/api/users', usersRouters)
 app.use('/api/quraa', quraaRouters)
 
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).json({
     code: 200,
     message: 'Wrong Endpoint, Try the endpoints below!',
