@@ -16,7 +16,7 @@ const port = process.env.PORT || 3300
 database()
 app.use(cors())
 app.use(express.json())
-app.use('/public', express.static(path.join('public')))
+app.use('public', express.static(path.join('public')))
 
 app.use(multer({ storage: pdf, fileFilter }).any())
 
