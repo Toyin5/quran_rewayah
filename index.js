@@ -4,7 +4,7 @@ import cors from "cors"
 import multer from 'multer'
 import express from "express"
 import database from "./utils/db.js"
-import * as url from 'url';
+import url from 'url';
 import { quranRouters } from "./routers/quran.js"
 import { adminRouters } from './routers/admin.js'
 import { usersRouters } from './routers/users.js'
@@ -13,11 +13,12 @@ import { fileFilter, pdf } from './utils/multer.js'
 
 const app = express()
 const port = process.env.PORT || 3300
+const dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 database()
 app.use(cors())
 app.use(express.json())
-app.use('public', express.static(path.join('public')))
+app.use('/public', express.static(path.join(dirname + '/public')))
 
 app.use(multer({ storage: pdf, fileFilter }).any())
 
@@ -26,12 +27,12 @@ app.use('/api/admin', adminRouters)
 app.use('/api/users', usersRouters)
 app.use('/api/quraa', quraaRouters)
 
-app.get('/media/:folder/:subfolder/:file', (req, res) => {
-  const { folder, subfolder, file } = req.params
-  const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-  console.log(__dirname)
+app.get('/public/:subfolder/:file', (req, res) => {
+  const { subfolder, file } = req.params
 
-  res.sendFile(`${__dirname}${folder}/${subfolder}/${file}`)
+  res.sendFile(`${dirname}/${subfolder}/${file}`, (err) => {
+    res.setHeader('Content-Type', 'application/pdf')
+  })
 })
 
 app.use('/', (req, res) => {
