@@ -30,9 +30,7 @@ app.use('/api/quraa', quraaRouters)
 app.get('/public/:subfolder/:file', (req, res) => {
   const { subfolder, file } = req.params
 
-  res.sendFile(`${dirname}/${subfolder}/${file}`, (err) => {
-    res.setHeader('Content-Type', 'application/pdf')
-  })
+  res.sendFile(`${dirname}/${subfolder}/${file}`)
 })
 
 app.use('/', (req, res) => {
