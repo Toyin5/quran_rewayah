@@ -4,6 +4,7 @@ import cors from "cors"
 import multer from 'multer'
 import express from "express"
 import database from "./utils/db.js"
+import * as url from 'url';
 import { quranRouters } from "./routers/quran.js"
 import { adminRouters } from './routers/admin.js'
 import { usersRouters } from './routers/users.js'
@@ -25,7 +26,14 @@ app.use('/api/admin', adminRouters)
 app.use('/api/users', usersRouters)
 app.use('/api/quraa', quraaRouters)
 
-app.get('/', (req, res) => {
+app.get('/media/:folder/:subfolder/:file', (req, res) => {
+  const { folder, subfolder, file } = req.params
+  const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+  res.sendFile(`${__dirname}/${folder}/${subfolder}/${file}`)
+})
+
+app.use('/', (req, res) => {
   res.status(200).json({
     code: 200,
     message: 'Wrong Endpoint, Try the endpoints below!',
