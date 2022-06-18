@@ -42,7 +42,7 @@ app.use('/', (req, res) => {
       {
         desc: 'Getting One Juz Of Quran.',
         url: {
-          endpoint: '/api/quran-rewayah/juz/{number of juz}',
+          endpoint: '/api/quran-rewayah/juz/<number-of-juz>',
           example: 'https://quran-rewayah-api.vercel.app/api/quran-rewayah/juz/2'
         }
       },
@@ -56,14 +56,14 @@ app.use('/', (req, res) => {
       {
         desc: 'Getting One Surah Of Quran.',
         url: {
-          endpoint: '/api/quran-rewayah/surah/{number of surah}',
+          endpoint: '/api/quran-rewayah/surah/<number-of-surah>',
           example: 'https://quran-rewayah-api.vercel.app/api/quran-rewayah/surah/5'
         }
       },
       {
         desc: 'Getting One Ayah Of Surah in Quran.',
         url: {
-          endpoint: '/api/quran-rewayah/ayah/{number of ayah}?surah={number of surah}',
+          endpoint: '/api/quran-rewayah/ayah/<number-of-ayah>?surah=<number-of-surah>',
           example: 'https://quran-rewayah-api.vercel.app/api/quran-rewayah/ayah/5?surah=12'
         }
       }
