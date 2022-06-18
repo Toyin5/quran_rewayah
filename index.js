@@ -16,21 +16,12 @@ const app = express()
 const port = process.env.PORT || 3300
 const dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-app.use(function (req, res, next) {
-  res.setHeader(
-    'Content-Security-Policy',
-    "default-src 'self'; font-src 'self'; img-src 'self'; style-src 'self'; frame-src 'self'"
-  );
-  next();
-});
-
 database()
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.raw({ type: 'application/pdf' }))
-app.use('/public', express.static(path.join(dirname + '/public')))
+app.use('/public', express.static(path.join('public')))
 
 app.use(multer({ storage: pdf, fileFilter }).any())
 
