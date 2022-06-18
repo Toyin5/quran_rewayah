@@ -4,6 +4,7 @@ import path from "path"
 import cors from "cors"
 import multer from 'multer'
 import express from "express"
+import bodyParser from 'body-parser';
 import database from "./utils/db.js"
 import { quranRouters } from "./routers/quran.js"
 import { adminRouters } from './routers/admin.js'
@@ -26,6 +27,9 @@ app.use(function (req, res, next) {
 database()
 app.use(cors())
 app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.raw({ type: 'application/pdf' }))
 app.use('/public', express.static(path.join(dirname + '/public')))
 
 app.use(multer({ storage: pdf, fileFilter }).any())
