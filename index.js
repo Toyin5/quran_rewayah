@@ -30,7 +30,7 @@ app.use('/api/quraa', quraaRouters)
 app.get('/public/:subfolder/:file', (req, res) => {
   const { subfolder, file } = req.params
 
-  res.sendFile(`${dirname}/${subfolder}/${file}`)
+  res.sendFile(path.join(`${dirname}/${subfolder}/${file}`))
 })
 
 app.use('/', (req, res) => {
