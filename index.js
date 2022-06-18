@@ -1,10 +1,10 @@
 import 'dotenv/config'
+import url from 'url';
 import path from "path"
 import cors from "cors"
 import multer from 'multer'
 import express from "express"
 import database from "./utils/db.js"
-import url from 'url';
 import { quranRouters } from "./routers/quran.js"
 import { adminRouters } from './routers/admin.js'
 import { usersRouters } from './routers/users.js'
@@ -14,6 +14,14 @@ import { fileFilter, pdf } from './utils/multer.js'
 const app = express()
 const port = process.env.PORT || 3300
 const dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+app.use(function (req, res, next) {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; font-src 'self'; img-src 'self'; style-src 'self'; frame-src 'self'"
+  );
+  next();
+});
 
 database()
 app.use(cors())
@@ -27,10 +35,10 @@ app.use('/api/admin', adminRouters)
 app.use('/api/users', usersRouters)
 app.use('/api/quraa', quraaRouters)
 
-app.get('/public/:subfolder/:file', (req, res) => {
+app.get('/media/:subfolder/:file', (req, res) => {
   const { subfolder, file } = req.params
 
-  res.sendFile(path.join(`${dirname}/${subfolder}/${file}`))
+  res.sendFile(path.join(`${dirname}/public/${subfolder}/${file}`))
 })
 
 app.use('/', (req, res) => {
