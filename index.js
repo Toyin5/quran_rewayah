@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import url from 'url';
+// import url from 'url';
 import path from "path"
 import cors from "cors"
 import multer from 'multer'
@@ -14,7 +14,7 @@ import { fileFilter, pdf } from './utils/multer.js'
 
 const app = express()
 const port = process.env.PORT || 3300
-const dirname = url.fileURLToPath(new URL('.', import.meta.url));
+// const dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 database()
 app.use(cors())
@@ -30,11 +30,11 @@ app.use('/api/admin', adminRouters)
 app.use('/api/users', usersRouters)
 app.use('/api/quraa', quraaRouters)
 
-app.get('/media/:subfolder/:file', (req, res) => {
-  const { subfolder, file } = req.params
+// app.get('/media/:subfolder/:file', (req, res) => {
+//   const { subfolder, file } = req.params
 
-  res.sendFile(path.join(`${dirname}/public/${subfolder}/${file}`))
-})
+//   res.sendFile(path.join(`${dirname}/public/${subfolder}/${file}`))
+// })
 
 app.use('/', (req, res) => {
   res.status(200).json({
@@ -70,13 +70,13 @@ app.use('/', (req, res) => {
           example: 'https://quran-rewayah-api.vercel.app/api/quran-rewayah/ayah/5?surah=12'
         }
       },
-      {
-        desc: 'Getting Quraa Sab\'ah in Quran.',
-        url: {
-          endpoint: '/api/quraa/qari',
-          example: 'https://quran-rewayah-api.vercel.app/api/quraa/qari'
-        }
-      }
+      // {
+      //   desc: 'Getting Quraa Sab\'ah in Quran.',
+      //   url: {
+      //     endpoint: '/api/quraa/qari',
+      //     example: 'https://quran-rewayah-api.vercel.app/api/quraa/qari'
+      //   }
+      // }
     ]
   })
 })
