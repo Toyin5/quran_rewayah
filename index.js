@@ -29,8 +29,9 @@ app.use('/api/quraa', quraaRouters)
 app.get('/media/:folder/:subfolder/:file', (req, res) => {
   const { folder, subfolder, file } = req.params
   const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+  console.log(__dirname)
 
-  res.sendFile(`${__dirname}/${folder}/${subfolder}/${file}`)
+  res.sendFile(`${__dirname}${folder}/${subfolder}/${file}`)
 })
 
 app.use('/', (req, res) => {
