@@ -66,6 +66,13 @@ app.use('/', (req, res) => {
           endpoint: '/api/quran-rewayah/ayah/<number-of-ayah>?surah=<number-of-surah>',
           example: 'https://quran-rewayah-api.vercel.app/api/quran-rewayah/ayah/5?surah=12'
         }
+      },
+      {
+        desc: 'Getting Quraa Sab\'ah in Quran.',
+        url: {
+          endpoint: '/api/quraa/qari',
+          example: 'https://quran-rewayah-api.vercel.app/api/quraa/qari'
+        }
       }
     ]
   })
